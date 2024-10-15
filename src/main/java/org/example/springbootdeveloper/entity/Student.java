@@ -12,7 +12,7 @@ public class Student {
 
     @Id // 해당 필드가 테이블의 기본 키(PK)임을 명시
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // 기본 키 값을 자동 생성 - DB의 AUTO_INCREMENT를 사용
+    // 기본 키 값을 자동 생성 - DB의 AUTO_INCREMENT 를 사용
     private Long id;
 
     private String name;
