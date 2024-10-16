@@ -21,6 +21,5 @@ public class g_constructure {
             > DB에 접근하는 DAO 객체를 사용 가능
 
             cf) DAO: 데이터베이스와 상호작용을 위한 객체
-
      */
 }
