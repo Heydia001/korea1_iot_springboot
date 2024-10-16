@@ -1,7 +1,7 @@
 package org.example.springbootdeveloper.service;
 
-import org.example.springbootdeveloper.Member;
-import org.example.springbootdeveloper.MemberRepository;
+import org.example.springbootdeveloper.entity.Member;
+import org.example.springbootdeveloper.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

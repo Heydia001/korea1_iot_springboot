@@ -1,6 +1,6 @@
 package org.example.springbootdeveloper.controller;
 
-import org.example.springbootdeveloper.Member;
+import org.example.springbootdeveloper.entity.Member;
 import org.example.springbootdeveloper.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
