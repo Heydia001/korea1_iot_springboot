@@ -1,7 +1,6 @@
 package org.example.springbootdeveloper.controller;
 
 import org.example.springbootdeveloper.dto.BoardDto;
-import org.example.springbootdeveloper.dto.StudentDto;
 import org.example.springbootdeveloper.service.BoardService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +27,7 @@ public class BoardController {
         return boardService.getBoardById(id);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public BoardDto updateBoard(@PathVariable Long id, @RequestBody BoardDto boardDto){
         return boardService.updateBoard(id, boardDto);
     }
@@ -38,7 +37,7 @@ public class BoardController {
         return boardService.createBoard(boardDto);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id){
         boardService.deleteBoard(id);
         return ResponseEntity.noContent().build();

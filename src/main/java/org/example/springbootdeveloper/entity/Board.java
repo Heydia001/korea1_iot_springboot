@@ -30,3 +30,4 @@ public class Board {
     @Column(nullable = false)
     private Category category;
 }
+

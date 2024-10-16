@@ -3,7 +3,6 @@ package org.example.springbootdeveloper.service;
 import org.example.springbootdeveloper.dto.BoardDto;
 import org.example.springbootdeveloper.entity.Board;
 import org.example.springbootdeveloper.repository.BoardRepository;
-import org.example.springbootdeveloper.repository.StudentRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -93,11 +92,12 @@ public class BoardService {
         try {
             Board board = boardRepository.findById(id)
                     .orElseThrow(() -> new Error("board 업데이트 실패: " + id));
-            board.setWriter(board.getWriter());
-            board.setTitle(board.getTitle());
-            board.setTitle(board.getTitle());
-            board.setContent(board.getContent());
-            board.setCategory(board.getCategory());
+
+            board.setId(boardDto.getId());
+            board.setWriter(boardDto.getWriter());
+            board.setTitle(boardDto.getTitle());
+            board.setContent(boardDto.getContent());
+            board.setCategory(boardDto.getCategory());
 
             Board updatedBoard = boardRepository.save(board);
 

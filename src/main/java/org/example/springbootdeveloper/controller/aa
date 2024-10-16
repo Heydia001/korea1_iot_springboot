@@ -1,0 +1,121 @@
+public BoardDto createBoard(BoardDto boardDto){
+    try{
+        Board board = new Board(boardDto.getID(), board.getTitle());
+        Board newBoard = boardRepository.save(board);
+
+        return new BoardDto(newBoard.getId(), newBoard.getTitle());
+
+    } catch(Exception e){
+        throw new ResponseStatusException(
+            HttpStatus.INTERNAL_STATUS_ERROR,
+            "ERROR", e
+            );
+    }
+}
+
+
+
+public List<BoardDto> findAllBoard(){
+    try{
+        List<Board> boards = boardRepository.findAll();
+        List<BoardDto> boardDto = boards.stream()
+            .map(board -> new BoardsDto(board.getId(), board.getTitle()).collector.Collection.toList());
+	    return boardDto;
+    } catch(Exception e){
+        throw new ResponseStatusException(
+            HttpStatus.INTERNAL_SERVER_ERROR,
+                "에러", e
+        );
+    }
+}
+
+public BoardDto findBoardById(Long id) {
+    try{
+        Board board = boardRepository.fondById(id)
+            .orElseThrow(() -> new Error("asdas"));
+        BoardDto boardDto = new BoardDto(
+            board.getID()
+            , board.getTitle()
+        );
+        return boardDto;
+    } catch(Exception e){
+        throw new ResponseStatusException(
+            HttpStatus.INTERNAL_SERVER_ERROR,
+            "에러남", e
+        );
+    }
+}
+
+public BoardDto updateBoard(Long id, BoardDto boardDto){
+    try{
+        Board board = boardRepository.findById(id)
+            .orElseThrow(() -> throw new Error("asdasd"));
+
+        board.setId(boardDto.getId());
+        board.setTitle(boardDto.getTitle());
+
+        Board updatedBoard = boardRepository.save(board);
+
+        return new BoardDto(updatedBoard.getId(), updatedBoard.getTitle());
+
+    }catch(Exception e){
+        throw new ResponseStatusException(
+            HttpStatus.INTERNAL_SERVER_ERROR,
+            "에러에요", e
+        );
+    }
+}
+
+public void deleteBoard(Long id){
+    try{
+        Board board = boardRepository.findByID(id)
+            .orElseThrow(() -> new Error("에런디"));
+
+        boardRepository.delete(board);
+    }catch(Exception e){
+        throw new ResponseStatusException(
+            HttpStatus.INTERNAL_STATUS_ERROR,
+            "에러당", e
+        );
+    }
+
+}
+
+// 깨달은점 repo에서 가져오고 Service에서 가공 후 controller에 제출한다.
+
+
+Controller
+
+@Controller
+
+private final BoardService boardService;
+
+public BoardController(BoardService boardService) {
+    this.boardService = boardService;
+}
+
+@Getmapping("/api/bord")
+public List<BoardDto> findAllBoard(){
+    return boardService.findAllBoard();
+}
+
+@Getmapping("/{id}")
+public BoardDto findBoardById(@PathVariable Long id){
+    return boardService.findBoardById(id);
+}
+
+@Postmapping
+public BoardDtO createBoard(@RequestBody BoardDto boardDto) {
+    return bordService.createBoard(boardDto);
+}
+
+@Putmapping("{/id}")
+public BoardDto updateBoard(@PathVariable Long id, BoardDto boardDto){
+    return boardService.updateBoard(id, boardDto);
+}
+
+@Deletemapping
+public ResponseEntity<Void> deleteBoard(@pathVariable Long id){
+    boardService.delete(id);
+    return ResponseEntity.noContent().build();
+}

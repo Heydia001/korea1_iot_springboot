@@ -43,7 +43,8 @@ public class StudentController {
     }
 
     // 3) 학생 등록 (POST) - 새로운 학생 데이터 등록
-    //HTTP POST 요청을 처리, "api/students" 경로와 매핑
+
+    // HTTP POST 요청을 처리, "api/students" 경로와 매핑
     @PostMapping
     public StudentDto createStudent(@RequestBody StudentDto studentDto) {
         // @RequestBody
@@ -51,7 +52,7 @@ public class StudentController {
         return studentService.createStudent(studentDto);
     }
 
-//    // 4) 학생 정보 수정 (PUT) - 특정 ID의 학생 정보를 수정
+    // 4) 학생 정보 수정 (PUT) - 특정 ID의 학생 정보를 수정
     @PutMapping("/{id}")
     public StudentDto updateStudent(@PathVariable Long id, @RequestBody StudentDto studentDto) {
         return studentService.updateStudent(id, studentDto);
