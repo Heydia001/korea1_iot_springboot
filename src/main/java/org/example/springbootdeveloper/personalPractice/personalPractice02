@@ -1,0 +1,86 @@
+BookService Class
+
+public BookResponseDto convertToResponseDto (Book book){
+    return new BookResponseDto (
+        book.getId()
+        , book.getTitle()~~~~
+    );
+}
+
+
+   // 3-1. 제목에 특정 단어가 포함된 책 조회
+public List<BookResponseDto> 타이틀로 찾기(String keyword){
+    try{
+        List<Book> books =  bookRepository.findBooksByTitle(keyword)
+            .orElseThrow(() -> new Error("에러랍니다."),e);
+
+        return books.stream()
+                .map(this::convertToResponseDto)
+                .collection(Collection.toList());
+
+    }catch(exception e) {
+        throw new Error;
+    }
+}
+
+
+//Controller
+
+
+@Getmapping("/search/title")
+public ResponseEntity<List<ResponseBookDto>> getBooksByTitle(@RequestParam String keyword){
+    List<ResponseBookDto> books = bookService.타이틀로 찾기(keyword);
+    return ResponseEntity.ok(books);
+}
+
+
+- 카테고리로 찾기
+
+service
+public List<BookResponseDto> findByCategory(Category category){
+    return bookRepository
+        .stream()
+        .map(this::convertToResponseDto)
+        .collector(Collection.toList());
+}
+
+controller
+@Getmapping("/category/{category}")
+public ResponseEntity<List<ResponseBookDto>> 카테고리로조회하기(@PathVariable Category category){
+    List<BookResponseDto> books = bookService.findByCategory(category);
+    return ResponseEntity.ok(books);
+}
+
+---카테고리 및 작성자로 찾기
+
+Repository
+List<Book> findBookByCategoryAndWriter(Category category, String writer);
+
+ > 카테고리를 저장하지 않을 경우
+List<Book> findBooksByWriter(String writer);
+
+Service
+public List<BookResponseDto> getBookByCategoryAndWriter(Category category, String writer) {
+    List<Book> books;
+
+    if(category == null){
+        books = bookRepository.findBooksByWriter(writer)
+    } else {
+        books = bookRepository.findBookByCategoryAndWriter(category, writer);
+    }
+
+    return books.stream()
+            .map()
+            .collector(Collection.toList());
+}
+
+Controller
+@Getmapping("/search/")
+public ResponseEntity<List<BookResponseDto>> 카테고리랑작성자로검색 (
+        @RequestParam(required = false) Category category,
+        @RequestParam String writer
+        ) {
+        List<BookResponseDto> books = bookService.getBookByCategoryAndWriter(category, writer)
+        return ResponseEntity.ok(books);
+}
+

@@ -81,7 +81,7 @@ public class BookService {
                 .collect(Collectors.toList());
     }
 
-    // 4, 특정 ID 책 수정
+    // 4. 특정 ID 책 수정
     public BookResponseDto updateBook(Long id, BookRequestUpdateDto updateDto) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("책을 찾을 수 없습니다: " + id));
