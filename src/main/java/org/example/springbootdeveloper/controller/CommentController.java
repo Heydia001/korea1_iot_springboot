@@ -1,11 +1,10 @@
 package org.example.springbootdeveloper.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.example.springbootdeveloper.dto.response.CommentResponseDto;
 import org.example.springbootdeveloper.dto.response.ResponseDto;
-import org.example.springbootdeveloper.entity.Comment;
 import org.example.springbootdeveloper.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +32,8 @@ public class CommentController {
     public ResponseDto<List<CommentResponseDto>> getCommentByPost(@PathVariable Long postId){
         return commentService.getCommentsByPost(postId);
     }
-    @GetMapping("{commentId}")
+
+    @PutMapping("/{commentId}")
     public ResponseDto<CommentResponseDto> updateComment(
             @PathVariable Long commentId,
             @RequestBody String newContent
@@ -41,9 +41,10 @@ public class CommentController {
         return commentService.updateComment(commentId, newContent);
     }
 
-    @DeleteMapping("{commentId}")
-    public ResponseDto<Void> deleteComment(@PathVariable Long commentId){
-        return commentService.deleteComment(commentId);
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId){
+        commentService.deleteComment(commentId);
+        return ResponseEntity.noContent().build();
     }
 
 

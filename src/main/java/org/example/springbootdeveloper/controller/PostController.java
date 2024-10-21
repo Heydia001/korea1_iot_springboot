@@ -1,49 +1,54 @@
 package org.example.springbootdeveloper.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.example.springbootdeveloper.dto.request.PostRequestDto;
 import org.example.springbootdeveloper.dto.response.PostResponseDto;
 import org.example.springbootdeveloper.dto.response.ResponseDto;
 import org.example.springbootdeveloper.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/posts")
 public class PostController {
 
     @Autowired
     private PostService postService;
 
-    //CRUD 명시
+    // CRUD 기능 명시
     @PostMapping
-    public ResponseDto<PostResponseDto> createPost(@RequestBody PostResponseDto dto){
-        return PostService.createPost(dto);
+    public ResponseDto<PostResponseDto> createPost(@RequestBody PostRequestDto dto) {
+        return postService.createPost(dto);
     }
 
     @GetMapping
-    public ResponseDto<List<PostResponseDto>> getPostsAll(@PathVariable Long postId){
-        return postService.getAllPosts(postId);
+    public ResponseDto<List<PostResponseDto>> getAllPosts() {
+        return postService.getAllPosts();
     }
 
-    @GetMapping("{postId}")
-    public ResponseDto<PostResponseDto> getPostById(@PathVariable Long postId){
+    @GetMapping("/search/{author}")
+    public ResponseDto<List<PostResponseDto>> getPostByAuthor(@PathVariable String author){
+       return postService.getPostByAuthor(author);
+    }
+
+    @GetMapping("/{postId}")
+    public ResponseDto<PostResponseDto> getPostById(@PathVariable Long postId) {
         return postService.getPostById(postId);
     }
 
-    @PutMapping("{postId}")
+
+    @PutMapping("/{postId}")
     public ResponseDto<PostResponseDto> updatePost(
-            @PathVariable Long postId
-            , @RequestBody PostRequestDto dto
-    ){
+            @PathVariable Long postId,
+            @RequestBody PostRequestDto dto) {
         return postService.updatePost(postId, dto);
     }
 
-    @DeleteMapping("{postId}")
-    public ResponseDto<Void> deletePost(@PathVariable Long postId){
-        return postService.deletePost(postId);
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<Void> deletePost(@PathVariable Long postId) {
+        postService.deletePost(postId);
+        return ResponseEntity.noContent().build();
     }
-
 }
