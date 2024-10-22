@@ -13,11 +13,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = users)
+@Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 
@@ -34,10 +35,18 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+
     @Builder
-    public User(String email, String password, String auth){
+    public User(String email, String password, String auth, LocalDateTime createdAt){
         this.email = email;
         this.password = password;
+        this.createAt = createdAt;
     }
 
     //cf) UserDetails 인터페이스

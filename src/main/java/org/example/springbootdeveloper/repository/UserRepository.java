@@ -10,4 +10,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     // User 타입의 엔티티의 필드를 선택적으로 가져올 수 있는 타입 정의
     Optional<User> findByEmail(String email);
+
+    // 해당 엔티티에 전달하는 이메일이 존재 할 경우 true / 존재하지 않은경우 false를 반환
+    boolean existsByEmail(String email);
 }
