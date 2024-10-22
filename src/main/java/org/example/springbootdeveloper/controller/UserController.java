@@ -25,7 +25,9 @@ public class UserController {
             return ResponseDto.setFailed("Sign up Failed");
         }
     }
-
+    // HTTP 메서드 : POST
+    // URI 경로: / login
+    // 로그인 로직
     @PostMapping("/login")
     public ResponseDto<String> login(@RequestBody UserLoginRequestDto dto){
         try {

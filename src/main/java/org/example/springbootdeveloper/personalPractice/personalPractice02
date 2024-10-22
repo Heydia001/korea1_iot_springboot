@@ -84,3 +84,25 @@ public ResponseEntity<List<BookResponseDto>> 카테고리랑작성자로검색 (
         return ResponseEntity.ok(books);
 }
 
+public PostResponseDto convertToDto(Post post){
+    List<CommentResponseDto> comments = post.getComments()
+        .stream().map(comment -> new CommentResponseDto(comment.getId(), comment.get))
+    return new PostResponseDto()
+        .
+}
+
+public ResponseDto<PostResponseDto> createNewPost (RequiredDto dto){
+    Post post = Post.builder()
+                .title(dto.getTitle())
+                .author(dto.getAuthor())
+                .build();
+    postRespository.save(post);
+    return ResponseDto.setSuccess("성공", convertToDto(post));
+}
+
+public ResponseDto<List<PostReseponseDto>> getAllPost(){
+    List<PostResponseDto> posts = postRepository.findAll()
+    .stream().map(this::convertToDto).collector(Collection.toList());
+    return ResponseDto.setSuccess("성공", posts);
+}
+

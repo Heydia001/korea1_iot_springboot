@@ -16,6 +16,10 @@ public class UserService {
     }
 
     public String login(UserLoginRequestDto dto) {
-        return null;
+        try {
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
