@@ -112,6 +112,11 @@ public class WebSecurityConfig {
                                 new AntPathRequestMatcher("/api/auth/**"),
                                 new AntPathRequestMatcher("/api/users/**"),
                                 new AntPathRequestMatcher("/user")
+//                                new AntPathRequestMatcher("/api/v1/main"),
+//                                new AntPathRequestMatcher("/api/v1/sign-up")
+//                                new AntPathRequestMatcher("/api/v1/sign-in")
+
+
                         )
                         // .permitAll()
                         //  : 누구나 접근이 가능하게 설정
