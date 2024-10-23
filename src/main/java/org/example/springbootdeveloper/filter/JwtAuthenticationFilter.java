@@ -1,6 +1,5 @@
 package org.example.springbootdeveloper.filter;
 
-import io.jsonwebtoken.io.IOException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +16,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import java.io.IOException;
+
 /*
  * JWT 인증 필터
  * - 요청에서 JWT 토큰을 추출
@@ -31,24 +32,46 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     // JWT 토큰을 처리하는 JwtProvider 의존성 주입
     private final JwtProvider jwtProvider;
 
+    /**
+     * JWT 인증 필터
+     * - 요청에서 JWT 토큰을 추출
+     * : request의 header에서 토큰 추출하여 검증
+     * : security의 context에 접근 제어자 정보 등록
+     *
+     * */
+
+    /**
+     * doFilterInternal
+     * : 요청의 헤더에서 JWT토큰을 추출
+     * : JwtProvider에서 만든 removeBearer()을 호출하여 토큰을 파싱
+     * : JwtProvider를 사용하여 토큰 검증 밒 사용자 ID추출
+     * 추출한 사용자 ID를 바탕으로 SecurityContext에 인증 정보를 설정하는 메서드 호출
+     * */
+
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
+
         try {
-            // 요청의 Authorization 헤더에서 Bearer 토큰 추출
-            String token = parseBearerToken(request);
+            // 요청 헤더에서 JWT 토큰을 추출
+            String authorizationHeader = request.getHeader("Authorization");
+
+            //헤더에서 토큰을 파싱하여 가져옴 ("Bearer "을 제거)
+            String token = (authorizationHeader != null && authorizationHeader.startsWith("Bearer")
+                    ? jwtProvider.removeBearer(authorizationHeader)
+                    : null);
 
             // 토큰이 없거나 유효하지 않으면 필터 체인을 타고 다음 단계로 이동
-            if (token == null) {
+            if (token == null || !jwtProvider.isValidToken(token)) {
                 filterChain.doFilter(request, response);
                 return;
             }
 
             // JWT 토큰이 유효할 경우 해당 토큰에서 사용자 ID 추출
-            String userId = jwtProvider.validate(token);
+            String userId = jwtProvider.getUserIdFromJwt(token);
 
             // 추출한 사용자 ID를 바탕으로 SecurityContext에 인증 정보 설정
             setAuthenticationContext(request, userId);
@@ -56,6 +79,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch(Exception e) {
             e.printStackTrace();
         }
+        filterChain.doFilter(request, response);
     }
 
     /*
@@ -64,11 +88,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
      * */
     private void setAuthenticationContext(HttpServletRequest request, String userId) {
         // 사용자 ID를 바탕으로 UsernamePasswordAuthenticationToken 생성
-        //  : 권한 정보 없음
+        //  : 기본 설정) 권한 정보 없음
         AbstractAuthenticationToken authenticationToken
                 = new UsernamePasswordAuthenticationToken(userId, null, AuthorityUtils.NO_AUTHORITIES);
 
         // 요청에 대한 세부 정보를 설정
+        //
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
         // 빈 SecurityContext 생성 후, 인증 토큰을 주입
