@@ -31,5 +31,4 @@ public class Book {
     // : enum의 이름을 문자열로 저장
     @Column(nullable = false)
     private Category category;
-
 }

@@ -91,7 +91,7 @@ public class WebSecurityConfig {
      * - JWT 필터를 추가하여 인증 요청을 처리
      * - 특정 경로에 대한 요청은 인증 없이 접근을 허용, 그 외의 요청은 인증이 필요
      *
-     * @param: http HttpSecurity - 객체를 통해 보안 설정을 관리
+     * @param:  HttpSecurity http- 객체를 통해 보안 설정을 관리
      * @return: SecurityFilterChain - 보안 필터 체인을 구성한 결과를 반환
      * @throws: Exception - 설정 중 예외 발생 가능
      * */
