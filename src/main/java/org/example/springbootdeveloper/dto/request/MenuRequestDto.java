@@ -25,6 +25,7 @@ public class MenuRequestDto {
 
     @NotNull
     private String category;
+
     private String size;
 
 }

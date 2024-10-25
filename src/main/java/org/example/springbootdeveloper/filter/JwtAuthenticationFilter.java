@@ -85,6 +85,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     /*
      * setAuthenticationContext
      * : SecurityContext에 인증 정보를 설정하는 메서드
+     * 요청에서 userId값을 시큐리티 컨텍스트에 인증 정보로 설정
+     * :UsernameAuthenticationToken을 생성하고, 해당 토큰에 userId 값을 넣어 인증 정보로 등록
+     * -> Spring Security는 Security Context folder에 있는 정보를 자동으로
+     *    , 컨트롤러의 메서드에서 주입시킬 수 있음 (@AuthenticationPrincipal)
+     *
      * */
     private void setAuthenticationContext(HttpServletRequest request, String userId) {
         // 사용자 ID를 바탕으로 UsernamePasswordAuthenticationToken 생성
