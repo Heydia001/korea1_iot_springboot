@@ -1,3 +1,4 @@
+
 package org.example.springbootdeveloper.common.constant;
 
 public class ResponseMessage {
@@ -35,9 +36,5 @@ public class ResponseMessage {
 
     // 토큰 및 메시지 관련 에러
     public static final String TOKEN_CREATE_FAIL = "Token creation failed."; // 토큰 생성 실패 시 반환 메시지
-    public static final String MESSAGE_SEND_FAIL = "Failed to send authentication number."; // 인증 번호 전송 실패 시 반환 메시지\\\
-
-    //(common/constant)
-    public static final String common = "common";
-    public static final String constant = "constant";
+    public static final String MESSAGE_SEND_FAIL = "Failed to send authentication number."; // 인증 번호 전송 실패 시 반환 메시지
 }

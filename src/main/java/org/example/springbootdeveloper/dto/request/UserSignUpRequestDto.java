@@ -10,7 +10,9 @@ import lombok.*;
 
 public class UserSignUpRequestDto{
     @NotNull
+    private String email;
+    @NotNull
     private String password;
     @NotNull
-    private String email;
+    private String confirmPassword;
 }

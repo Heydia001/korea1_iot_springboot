@@ -1,15 +1,15 @@
 package org.example.springbootdeveloper.dto.request;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Builder
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
-public class UserSignInRequestDto {
+public class PostTodoRequestDto {
+
     @NotNull
-    private String email;
+    private String task;
     @NotNull
-    private String password;
+    private Boolean status;
 }

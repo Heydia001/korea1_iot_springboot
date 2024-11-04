@@ -1,6 +1,5 @@
 package org.example.springbootdeveloper.service;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.springbootdeveloper.common.constant.ResponseMessage;
 import org.example.springbootdeveloper.dto.request.MenuRequestDto;
@@ -43,7 +42,6 @@ public class MenuService {
             e.printStackTrace();
             return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
         }
-
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 

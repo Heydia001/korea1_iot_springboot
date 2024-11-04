@@ -25,7 +25,7 @@ public class MenuController {
 
     public static final String MENU_GET_MENU_ID = "/{id}";
     public static final String MENU_GET_LIST = "/list";
-    public static final String MENU_GET_MENU_CATEGORY = "/category";
+    public static final String MENU_GET_MENU_CATEGORY = "/search/category";
 
     public static final String MENU_PUT = "/{id}";
 
